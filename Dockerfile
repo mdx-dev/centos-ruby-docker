@@ -18,6 +18,7 @@ RUN mkdir $RUBY_DIR && \
     cd $RUBY_DIR    && \
     git clone https://github.com/sstephenson/ruby-build.git && \
     $RUBY_DIR/ruby-build/install.sh                         && \
-    cd $RUBY_DIR/ruby-build && ./bin/ruby-build $RUBY_VERSION $RUBY_INSTALL
+    cd $RUBY_DIR/ruby-build && ./bin/ruby-build $RUBY_VERSION $RUBY_INSTALL && \
+    rm -rf $RUBY_DIR/ruby-build
 
 ENV PATH $RUBY_INSTALL/bin:$PATH
