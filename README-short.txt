@@ -1,1 +1,1 @@
-CentOS 6/Ruby 2
+CentOS/Ruby 2
