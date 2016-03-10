@@ -3,7 +3,7 @@ FROM centos:centos7
 MAINTAINER services-engineering@vitals.com
 
 ENV RUBY_DIR /ruby
-ENV RUBY_VERSION 2.2.3
+ENV RUBY_VERSION 2.2.4
 ENV RUBY_INSTALL $RUBY_DIR/$RUBY_VERSION
 
 RUN rpm -Uvh \
@@ -14,14 +14,16 @@ RUN rpm -Uvh \
     libyaml-devel libffi-devel openssl-devel \
     gdbm-devel ncurses-devel libxml-devel
 
-RUN wget http://nodejs.org/dist/v0.12.7/node-v0.12.7-linux-x64.tar.gz -O /tmp/node-v0.12.7-linux-x64.tar.gz && \
-  tar --strip-components 1 -xzvf /tmp/node-v* -C /usr/local
-
 RUN mkdir $RUBY_DIR && \
     cd $RUBY_DIR    && \
     git clone https://github.com/sstephenson/ruby-build.git && \
     $RUBY_DIR/ruby-build/install.sh                         && \
     cd $RUBY_DIR/ruby-build && ./bin/ruby-build $RUBY_VERSION $RUBY_INSTALL && \
     rm -rf $RUBY_DIR/ruby-build
+
+ENV NODE_VERSION 5.6.0
+
+RUN wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz -O /tmp/node-v${NODE_VERSION}-linux-x64.tar.gz && \
+  tar --strip-components 1 -xzvf /tmp/node-v* -C /usr/local
 
 ENV PATH $RUBY_INSTALL/bin:$PATH
