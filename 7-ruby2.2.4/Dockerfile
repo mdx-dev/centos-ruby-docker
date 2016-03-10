@@ -12,14 +12,14 @@ RUN rpm -Uvh \
     yum install -y make which wget tar git \
     gcc patch readline-devel zlib-devel      \
     libyaml-devel libffi-devel openssl-devel \
-    gdbm-devel ncurses-devel libxml-devel
+    gdbm-devel ncurses-devel libxml-devel bzip2
 
-RUN mkdir $RUBY_DIR && \
-    cd $RUBY_DIR    && \
+RUN cd /usr/src && \
     git clone https://github.com/sstephenson/ruby-build.git && \
-    $RUBY_DIR/ruby-build/install.sh                         && \
-    cd $RUBY_DIR/ruby-build && ./bin/ruby-build $RUBY_VERSION $RUBY_INSTALL && \
-    rm -rf $RUBY_DIR/ruby-build
+    ./ruby-build/install.sh && \
+    mkdir -p $RUBY_INSTALL && \
+    /usr/local/bin/ruby-build $RUBY_VERSION $RUBY_INSTALL && \
+    rm -rf /usr/src/ruby-build
 
 ENV NODE_VERSION 5.6.0
 
