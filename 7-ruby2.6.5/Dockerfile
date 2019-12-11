@@ -23,4 +23,9 @@ RUN cd /usr/src && \
     /usr/local/bin/ruby-build $RUBY_VERSION $RUBY_INSTALL && \
     rm -rf /usr/src/ruby-build
 
+ENV NODE_VERSION 13.3.0
+
+RUN wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz -O /tmp/node-v${NODE_VERSION}-linux-x64.tar.gz && \
+  tar --strip-components 1 -xzvf /tmp/node-v* -C /usr/local
+
 ENV PATH $RUBY_INSTALL/bin:$PATH
